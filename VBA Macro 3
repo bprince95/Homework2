@@ -1,0 +1,15 @@
+Sub FinalMacro3()
+
+    For color_cond = 1 To 80000
+
+        If Cells(color_cond + 1, 10).Value > 0 Then
+        Cells(color_cond + 1, 10).Interior.Color = vbGreen
+
+
+        ElseIf Cells(color_cond + 1, 10).Value < 0 Then
+        Cells(color_cond + 1, 10).Interior.Color = vbRed
+
+    End If
+
+    Next color_cond
+End Sub
