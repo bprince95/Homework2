@@ -1,0 +1,143 @@
+Sub FinalMacro()
+
+Dim StN As String
+Dim Vt As Double
+Dim YCH As Double
+Dim PCH As Double
+
+    Vt = 0
+    YCH = 0
+    PCH = 0
+
+
+Dim total As Integer
+    total = 2
+
+    For i = 2 To 800000
+
+    If Cells(i + 1, 1).Value <> Cells(i, 1).Value Then
+        StN = Cells(i, 1).Value
+        Vt = Vt + Cells(i, 7).Value
+        YCH = YCH + ((Cells(i, 6).Value) - (Cells(i, 3).Value))
+        PCH = PCH + (YCH / Cells(i, 3).Value)
+    
+        Range("I" & total).Value = StN
+        Range("J" & total).Value = YCH
+        Range("K" & total).Value = PCH
+        Range("L" & total).Value = Vt
+        total = total + 1
+    
+            Cells(i, 11).NumberFormat = "0.00%"
+
+        Vt = 0
+        YCH = 0
+        PCH = 0
+
+    Else
+
+        Vt = Vt + Cells(i, 7).Value
+        YCH = YCH + ((Cells(i, 6).Value - Cells(i, 3).Value))
+        
+
+            Cells(i, 11).NumberFormat = "0.00%"
+
+    End If
+
+        Range("I1").Value = "Ticker"
+        Range("L1").Value = "Volume"
+        Range("J1").Value = "Yearly Change"
+        Range("K1").Value = "Percent Change"
+Next i
+
+End Sub
+Sub FinalMacro2()
+
+Dim TickerMax, TickerMin, TickerVol, Max_inc, Min_inc, Max_vol As Double
+
+Max_inc = WorksheetFunction.Max(Range("K1:K500"))
+Min_inc = WorksheetFunction.Min(Range("K1:K500"))
+Max_vol = WorksheetFunction.Max(Range("L1:L500"))
+
+For i = 2 To 40000
+Max_inc = WorksheetFunction.Max(Range("K1:K1000"))
+
+    If Cells(i, 11).Value = Max_inc Then
+    Max_inc = Cells(i, 11).Value
+    TickerMax = Cells(i, 9).Value
+    
+    
+    
+    Range("O2").Value = TickerMax
+    Range("P2").Value = Max_inc
+    Range("P2").NumberFormat = "0.00%"
+    
+    Max_inc = 0
+    TickerMax = 0
+       
+Else
+    Max_inc = Cells(i, 11).Value
+    TickerMax = Cells(i, 9).Value
+    
+    Max_inc = 0
+    TickerMax = 0
+    
+    End If
+    
+Next i
+
+For i = 2 To 4000
+Min_inc = WorksheetFunction.Min(Range("K1:K1000"))
+    If Cells(i, 11).Value = Min_inc Then
+    Min_inc = Cells(i, 11).Value
+    TickerMin = Cells(i, 9).Value
+    
+    Range("O3").Value = TickerMin
+    Range("P3").Value = Min_inc
+    Range("P3").NumberFormat = "0.00%"
+
+    Min_inc = 0
+    TickerMin = 0
+
+Else
+
+    Min_inc = Cells(i, 11).Value
+    TickerMin = Cells(i, 9).Value
+    
+    Min_inc = 0
+    TickerMin = 0
+    
+    End If
+Next i
+
+
+For i = 2 To 4000
+Max_vol = WorksheetFunction.Max(Range("L1:L1000"))
+    If Cells(i, 12).Value = Max_vol Then
+    Max_vol = Cells(i, 12).Value
+    TickerVol = Cells(i, 9).Value
+    
+    Range("O4").Value = TickerVol
+    Range("P4").Value = Max_vol
+    
+    Max_vol = 0
+    TickerVol = 0
+
+Else
+
+    Max_vol = Cells(i, 12).Value
+    TickerVol = Cells(i, 9).Value
+    
+    Max_vol = 0
+    TickerVol = 0
+    End If
+
+Next i
+
+Range("O1").Value = "Ticker"
+Range("P1").Value = "Value"
+
+Range("N2").Value = "Greatest % Increase"
+Range("N3").Value = "Greatest % Decrease"
+Range("N4").Value = "Greatest Total Volume"
+
+End Sub
